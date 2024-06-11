@@ -1,0 +1,41 @@
+class FSA:
+    def __init__(self):
+        self.states = {'q0', 'q1', 'q2'}  # Set of states
+        self.alphabet = {'a', 'b'}         # Input alphabet
+        self.transitions = {               # Transition function
+            ('q0', 'a'): 'q1',
+            ('q0', 'b'): 'q0',
+            ('q1', 'a'): 'q1',
+            ('q1', 'b'): 'q2',
+            ('q2', 'a'): 'q1',
+            ('q2', 'b'): 'q0'
+        }
+        self.start_state = 'q0'            # Start state
+        self.accept_states = {'q2'}        # Set of accept states
+
+    def is_accepted(self, input_string):
+        current_state = self.start_state
+        for symbol in input_string:
+            if (current_state, symbol) in self.transitions:
+                current_state = self.transitions[(current_state, symbol)]
+            else:
+                return False
+        return current_state in self.accept_states
+
+
+def main():
+    fsa = FSA()
+
+    # Test strings
+    test_strings = ['aab', 'abb', 'ab', 'a', 'b', 'baab']
+
+    # Test the strings
+    for test_string in test_strings:
+        if fsa.is_accepted(test_string):
+            print(f"'{test_string}' is accepted")
+        else:
+            print(f"'{test_string}' is not accepted")
+
+
+if __name__ == "__main__":
+    main()

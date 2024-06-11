@@ -1,0 +1,38 @@
+class MorphologicalFSM:
+    def __init__(self):
+        # Define states and transitions
+        self.states = ['start', 'add_s', 'add_es']
+        self.transitions = {
+            'start': {'s': 'add_s', 'x': 'add_es', 'default': 'add_es'},
+            'add_s': {'default': 'add_es'},
+            'add_es': {'default': 'add_es'}
+        }
+
+    def generate_plural(self, noun):
+        # Initialize the current state
+        current_state = 'start'
+
+        # Apply transitions based on the characters in the noun
+        for char in noun[::-1]:  # Iterate over characters in reverse order
+            if char in self.transitions[current_state]:
+                current_state = self.transitions[current_state][char]
+            else:
+                current_state = self.transitions[current_state]['default']
+
+        # Apply final state logic to determine the plural form
+        plural_noun = noun + 's' if current_state == 'add_s' else noun + 'es'
+        return plural_noun
+
+
+def main():
+    fsm = MorphologicalFSM()
+
+    # Test plural generation
+    nouns = ['cat', 'dog', 'fox', 'bus', 'box', 'wish', 'quiz']
+    for noun in nouns:
+        plural_form = fsm.generate_plural(noun)
+        print(f'Plural of {noun}: {plural_form}')
+
+
+if __name__ == "__main__":
+    main()

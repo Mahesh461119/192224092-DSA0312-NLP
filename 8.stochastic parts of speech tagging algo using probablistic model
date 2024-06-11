@@ -1,0 +1,37 @@
+import nltk
+import random
+
+# Sample training data
+training_data = [
+    ("The", "DT"),
+    ("brown", "JJ"),
+    ("fox", "NN"),
+    ("jumps", "VBZ"),
+    ("over", "IN"),
+    ("the", "DT"),
+    ("lazy", "JJ"),
+    ("dog", "NN")
+]
+
+# Function to train the model
+def train_model(training_data):
+    # Create a frequency distribution of word-tag pairs
+    freq_dist = nltk.FreqDist(training_data)
+    return freq_dist
+
+# Function to assign POS tags to a sentence
+def tag_sentence(sentence, freq_dist):
+    tagged_sentence = []
+    for word in sentence:
+        # Get the most likely tag for the word based on the training data
+        tag = freq_dist[word].max() if word in freq_dist else random.choice(["NN", "VBZ", "JJ", "DT", "IN"]) # Fallback to random tag if word is unseen
+        tagged_sentence.append((word, tag))
+    return tagged_sentence
+
+# Train the model
+freq_dist = train_model(training_data)
+
+# Test the model with a sample sentence
+sentence = ["The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]
+tagged_sentence = tag_sentence(sentence, freq_dist)
+print(tagged_sentence)

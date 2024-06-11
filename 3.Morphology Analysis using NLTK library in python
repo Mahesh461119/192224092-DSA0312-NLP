@@ -1,0 +1,33 @@
+class MorphologicalAnalyzer:
+    def __init__(self):
+        # Define a simple dictionary of words and their morphological information
+        self.dictionary = {
+            'dog': {'POS': 'Noun', 'Definition': 'A domesticated carnivorous mammal'},
+            'jump': {'POS': 'Verb', 'Definition': 'Move quickly and forcefully'},
+            'quick': {'POS': 'Adjective', 'Definition': 'Moving fast or doing something fast'}
+            # Add more words and their morphological information as needed
+        }
+
+    def analyze(self, word):
+        # Check if the word is in the dictionary
+        if word in self.dictionary:
+            # If yes, print its morphological information
+            print("Word:", word)
+            print("POS:", self.dictionary[word]['POS'])
+            print("Definition:", self.dictionary[word]['Definition'])
+        else:
+            # If not found in the dictionary, print an error message
+            print("Word not found in the dictionary.")
+
+def main():
+    # Create an instance of the MorphologicalAnalyzer class
+    analyzer = MorphologicalAnalyzer()
+
+    # Test the analyzer with some words
+    words_to_analyze = ['dog', 'jump', 'quick', 'cat']  # 'cat' is not in the dictionary
+    for word in words_to_analyze:
+        print("\nAnalyzing:", word)
+        analyzer.analyze(word)
+
+if __name__ == "__main__":
+    main()
