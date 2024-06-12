@@ -1,0 +1,28 @@
+# Define transformation rules
+rules = [
+    (["ends_with_ing"], "VERB"),  # If a word ends with 'ing', tag it as a verb
+    (["ends_with_ly"], "ADV"),    # If a word ends with 'ly', tag it as an adverb
+    (["ends_with_ed"], "VERB"),   # If a word ends with 'ed', tag it as a verb
+    (["ends_with_s"], "NOUN"),    # If a word ends with 's', tag it as a noun
+    (["ends_with_able"], "ADJ")   # If a word ends with 'able', tag it as an adjective
+]
+
+# Function to apply transformation rules and tag words
+def transform_based_tagging(words):
+    tagged_words = []
+    for word in words:
+        for rule in rules:
+            conditions, tag = rule
+            if all(condition in word for condition in conditions):
+                tagged_words.append((word, tag))
+                break
+        else:
+            # If no rule matches, default to 'NOUN'
+            tagged_words.append((word, "NOUN"))
+    return tagged_words
+
+# Test the tagging function
+sentence = "He is walking quickly"
+words = sentence.split()
+tagged_words = transform_based_tagging(words)
+print(tagged_words)

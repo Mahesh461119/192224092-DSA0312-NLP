@@ -1,0 +1,44 @@
+import re
+
+def pos_tag(sentence):
+    tagged_words = []
+    
+    # Define regular expressions for different parts of speech
+    patterns = [
+        (r'\b(?:a|an|the)\b', 'DET'),          # Articles
+        (r'\b(?:is|am|are|was|were)\b', 'VERB'), # Verbs
+        (r'\b(?:\w+ed)\b', 'VERB'),            # Past tense verbs
+        (r'\b(?:\w+ing)\b', 'VERB'),           # Present participle verbs
+        (r'\b(?:\w+s)\b', 'NOUN'),             # Plural nouns
+        (r'\b(?:\w+ly)\b', 'ADV'),             # Adverbs
+        (r'\b(?:\w+ly)\b', 'ADV'),             # Adverbs
+        (r'\b(?:\w+ness)\b', 'NOUN'),          # Nouns ending with 'ness'
+        (r'\b(?:\w+ity)\b', 'NOUN'),           # Nouns ending with 'ity'
+        (r'\b(?:\w+ful)\b', 'ADJ'),            # Adjectives ending with 'ful'
+        (r'\b(?:\w+able)\b', 'ADJ'),           # Adjectives ending with 'able'
+        (r'\b(?:\w+ous)\b', 'ADJ'),            # Adjectives ending with 'ous'
+        (r'\b(?:\w+ish)\b', 'ADJ'),            # Adjectives ending with 'ish'
+        (r'\b(?:\w+ly)\b', 'ADV'),             # Adverbs ending with 'ly'
+        (r'\b(?:\w+est)\b', 'ADJ'),            # Superlative adjectives
+        (r'\b(?:\w+er)\b', 'ADJ'),             # Comparative adjectives
+        (r'\b(?:\d+)\b', 'NUM'),               # Numbers
+        (r'\b(?:\w+)\b', 'NOUN'),              # Default to nouns
+    ]
+    
+    # Apply patterns to tag words in the sentence
+    for word in sentence.split():
+        tagged = False
+        for pattern, pos_tag in patterns:
+            if re.match(pattern, word):
+                tagged_words.append((word, pos_tag))
+                tagged = True
+                break
+        if not tagged:
+            tagged_words.append((word, 'NOUN'))  # Default to noun if not matched
+    
+    return tagged_words
+
+# Example usage
+sentence = "The quick brown fox jumps over the lazy dog"
+tagged_sentence = pos_tag(sentence)
+print(tagged_sentence)
